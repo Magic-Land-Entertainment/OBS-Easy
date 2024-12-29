@@ -21,6 +21,8 @@ Install OBS, plugins, and tools, easily to simplify the setup of streaming integ
 
 ## TODO
 
+- Allow user to cancel out of script
+- Add option to reconfigure NDI IP addresses easily
 - Further testing on Linux Mint 22 especially for appliance mode
 - Test on Ubuntu 24.04
 - Add more OS testing to ensure the current system is supported

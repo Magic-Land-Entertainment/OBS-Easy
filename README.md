@@ -2,6 +2,8 @@
 
 Install OBS, plugins, and tools, easily to simplify the setup of streaming integration to larger audio/video environments
 
+![Screenshot of main selection](https://github.com/Magic-Land-Entertainment/OBS-Easy/blob/main/Screenshots/Screenshot_1.png?raw=true "Screenshot of main selection")
+
 ## Available options
 
 - Install into Distrobox container

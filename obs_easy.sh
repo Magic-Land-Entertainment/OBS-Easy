@@ -97,10 +97,9 @@ distrobox_install() {
 }
 
 os_install() {
-    sudo apt-add-repository ppa:obsproject/obs-studio
+    sudo apt-add-repository -y ppa:obsproject/obs-studio
     sudo apt-get update
-    sudo apt-get install ffmpeg obs-studio
-    sudo apt install -y obs-studio ffmpeg vainfo mesa-vulkan-drivers
+    sudo apt install -y curl obs-studio ffmpeg vainfo mesa-vulkan-drivers
 }
 
 os_fluxbox_install() {

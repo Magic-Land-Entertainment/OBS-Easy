@@ -93,7 +93,10 @@ ndi_os_install() {
 
 distrobox_install() {
     distrobox create -n $DISTROBOX_CONTAINER_NAME -i docker.io/library/ubuntu:latest --additional-flags "-v /run/dbus/system_bus_socket:/run/dbus/system_bus_socket"
-    distrobox enter $DISTROBOX_CONTAINER_NAME -- "sudo apt install -y obs-studio ffmpeg vainfo mesa-vulkan-drivers"
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- sudo apt install software-properties-common -y
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- sudo add-apt-repository ppa:obsproject/obs-studio -y
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- sudo apt upgrade -y
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- sudo apt install -y obs-studio vlc ffmpeg vainfo mesa-vulkan-drivers
 }
 
 os_install() {
@@ -119,7 +122,7 @@ EOF
 
 fluxbox_configs() {
     if [ "$DISTROBOX" == "1" ]; then
-        OBS_CMD='distrobox enter obs -- "obs"'
+        OBS_CMD="distrobox enter ${DISTROBOX_CONTAINER_NAME} -- \"obs\""
     else
         OBS_CMD="obs"
     fi
@@ -195,15 +198,15 @@ EOF
 }
 
 distrobox_desktop_shortcut() {
-    distrobox enter $DISTROBOX_CONTAINER_NAME -- "cp $OBS_SC_PATH $SHORTCUT_PATH"
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- cp $OBS_SC_PATH $SHORTCUT_PATH
     ## copy svg out of container
-    distrobox enter $DISTROBOX_CONTAINER_NAME -- "cp /usr/share/icons/hicolor/scalable/apps/com.obsproject.Studio.svg ~/.local/share/icons"
+    distrobox enter $DISTROBOX_CONTAINER_NAME -- cp /usr/share/icons/hicolor/scalable/apps/com.obsproject.Studio.svg ~/.local/share/icons
     cat <<EOF > "$SHORTCUT_PATH"
 [Desktop Entry]
 Version=1.0
 Name=OBS in Distrobox
 Comment=Launch OBS via Distrobox
-Exec=distrobox enter obs -- "obs"
+Exec=distrobox enter ${DISTROBOX_CONTAINER_NAME} -- "obs"
 Icon=com.obsproject.Studio
 Terminal=false
 Type=Application
